@@ -1,7 +1,7 @@
 apiVersion: openfaas.com/v1
 kind: Function
 metadata:
-  name: time-parser
+  name: time-parser-test
   namespace: openfaas-fn
 spec:
   name: time-parser-test

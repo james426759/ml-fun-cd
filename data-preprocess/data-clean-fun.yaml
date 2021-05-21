@@ -3,6 +3,7 @@ kind: Function
 metadata:
   name: data-clean
   namespace: openfaas-fn
+  test: test123
 spec:
   name: data-clean
   image: james759426/data-clean:0.0.1

@@ -2,12 +2,35 @@ apiVersion: kopf.dev/v1
 kind: MLFlow
 metadata:
   name: lstm-pipeline-test
+  namespace: ml-faas
 spec:
   pipeline:
     stage1:
       name: data-preprocess
+      rule: ['dev', 'user']
+      node: training
       step:
+      - name: load-data
+        mlfun: james759426/lstm-load-data:0.0.1
       - name: time-parser
-        mlfun: james759426/time-parser:0.0.1
+        mlfun: james759426/lstm-time-parser:0.0.1
       - name: data-clean
-        mlfun: james759426/data-clean:0.0.1
+        mlfun: james759426/lstm-data-clean:0.0.1
+    stage2:
+      name: LSTM-model-build
+      rule: ['dev']
+      node: training
+      step:
+      - name: train-data-build
+        mlfun: james759426/lstm-train-data-build:0.0.1
+      - name: train-model-build
+        mlfun: james759426/lstm-train-model-build:0.0.1
+      - name: train-model
+        mlfun: james759426/lstm-train-model-10:0.0.1
+    stage3:
+      name: model-serving
+      rule: ['dev', 'user']
+      node: training
+      step:
+      - name: model-serving-fun
+        mlfun: james759426/lstm-model-serving-fun:0.0.1
